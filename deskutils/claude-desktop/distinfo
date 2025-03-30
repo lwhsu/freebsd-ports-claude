@@ -1,0 +1,5 @@
+TIMESTAMP = 1743338555
+SHA256 (Claude-Setup-x64.exe) = 2bff322c018b0e80066909f39aea93637535fa21e82473b155fb38e1f8a74e58
+SIZE (Claude-Setup-x64.exe) = 119596648
+SHA256 (Claude-Setup-arm64.exe) = b838544319c1584edb65db5551a57fcc4880c59c66c8ee19862c3cad68b12bbe
+SIZE (Claude-Setup-arm64.exe) = 120068712
