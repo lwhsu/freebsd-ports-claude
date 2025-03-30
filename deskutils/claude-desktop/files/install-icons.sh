@@ -2,13 +2,13 @@
 
 set -ex
 
-PACKAGE_NAME="claude-desktop"
+if [ -z "${ICONSDIR}" ]; then
+	echo "No ICONSDIR defined." > /dev/stderr
+	exit 1
+fi
 
-echo ${DESTDIR}
-
-## Install icons
 for size in 16 24 32 48 64 256; do
-	icon_dir="$INSTALL_DIR/share/icons/hicolor/${size}x${size}/apps"
+	icon_dir="${ICONSDIR}/hicolor/${size}x${size}/apps"
 	mkdir -p "$icon_dir"
 
 	case "$size" in
@@ -20,9 +20,5 @@ for size in 16 24 32 48 64 256; do
 		256) file="claude_6_256x256x32.png" ;;
 	esac
 
-	install -m 644 "$file" "$icon_dir/claude-desktop.png"
+	install -m 0644 "$file" "$icon_dir/claude-desktop.png"
 done
-
-# Copy app files
-cp app.asar "$INSTALL_DIR/share/$PACKAGE_NAME/resources/"
-cp -R app.asar.unpacked "$INSTALL_DIR/share/$PACKAGE_NAME/resources/"

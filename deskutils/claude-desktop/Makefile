@@ -15,28 +15,35 @@ LICENSE_PERMS=	dist-mirror pkg-mirror auto-accept
 ONLY_FOR_ARCHS=	amd64 arm64
 ONLY_FOR_ARCHS_REASON=	Only amd64 and arm64 binary available
 
+# dependencies:
+# 7-zip
+# icoutils
+# npm-node20
+
 #USES=	nodejs tar:tgz
+
+SUB_FILES=	${PORTNAME}
 
 do-extract:
 	${MKDIR} ${WRKSRC}
 	${CP} ${DISTDIR}/${DISTFILES} ${WRKSRC}
-	${CP} ${FILESDIR}/build.sh ${FILESDIR}/install.sh ${WRKSRC}
+	${CP} ${FILESDIR}/build.sh ${FILESDIR}/install-icons.sh ${WRKSRC}
 
 do-build:
 	${CP} -f ${FILESDIR}/build.sh ${WRKSRC} #XXX
-	cd ${WRKSRC} && env PREFIX=${PREFIX} FILESDIR=${FILESDIR} ./build.sh
+	cd ${WRKSRC} && env FILESDIR=${FILESDIR} ./build.sh
 
 do-install:
-	${CP} -f ${FILESDIR}/install.sh ${WRKSRC} #XXX
-	cd ${WRKSRC} && env PREFIX=${PREFIX} FILESDIR=${FILESDIR} ./install.sh
-# Create desktop entry
-# ${FILESDIR}/claude-desktop.desktop
-# ${INSTALL_DATA} ${FILESDIR}/${PORTNAME}.desktop ${STAGEDIR}${DESKTOPDIR}
+	${CP} -f ${FILESDIR}/install-icons.sh ${WRKSRC} #XXX
+	cd ${WRKSRC} && \
+		env ICONSDIR=${STAGEDIR}${PREFIX}/share/icons ./install-icons.sh
+	${MKDIR} ${STAGEDIR}${DATADIR}/resources
+	${INSTALL_DATA} ${WRKSRC}/electron-app/app.asar ${STAGEDIR}${DATADIR}/resources
+	cd ${WRKSRC}/electron-app && \
+		${COPYTREE_SHARE} app.asar.unpacked ${STAGEDIR}${DATADIR}/resources
 
-# Create launcher script with Wayland flags
-# ${FILESDIR}/claude-desktop.in
-# SUB_FILES=      ${PORTNAME}
-# ${INSTALL_SCRIPT} ${WRKDIR}/${PORTNAME} ${STAGEDIR}${PREFIX}/bin
+	${INSTALL_DATA} ${FILESDIR}/${PORTNAME}.desktop ${STAGEDIR}${DESKTOPDIR}
+	${INSTALL_SCRIPT} ${WRKDIR}/${PORTNAME} ${STAGEDIR}${PREFIX}/bin
 
 .include <bsd.port.options.mk>
 

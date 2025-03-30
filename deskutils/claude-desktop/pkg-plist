@@ -1,0 +1,11 @@
+bin/claude-desktop
+share/applications/claude-desktop.desktop
+%%DATADIR%%/resources/app.asar
+%%DATADIR%%/resources/app.asar.unpacked/node_modules/claude-native/claude-native-binding.node
+%%DATADIR%%/resources/app.asar.unpacked/node_modules/claude-native/index.js
+share/icons/hicolor/16x16/apps/claude-desktop.png
+share/icons/hicolor/24x24/apps/claude-desktop.png
+share/icons/hicolor/256x256/apps/claude-desktop.png
+share/icons/hicolor/32x32/apps/claude-desktop.png
+share/icons/hicolor/48x48/apps/claude-desktop.png
+share/icons/hicolor/64x64/apps/claude-desktop.png

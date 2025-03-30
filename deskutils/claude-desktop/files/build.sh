@@ -1,17 +1,13 @@
 #!/bin/sh
 
-# dependencies:
-# 7-zip
-# icoutils
-# npm-node20
-
 set -ex
 
-PACKAGE_NAME="claude-desktop"
 CLAUDE_EXE=Claude-Setup-x64.exe
 
-echo ${PREFIX}
-echo ${FILESDIR}
+if [ -z "${FILESDIR}" ]; then
+	echo "No FILESDIR defined." > /dev/stderr
+	exit 1
+fi
 
 # Extract resources
 7z x -y ${CLAUDE_EXE}
