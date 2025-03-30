@@ -30,20 +30,17 @@ do-extract:
 	${CP} ${FILESDIR}/build.sh ${FILESDIR}/install-icons.sh ${WRKSRC}
 
 do-build:
-	${CP} -f ${FILESDIR}/build.sh ${WRKSRC} #XXX
 	cd ${WRKSRC} && env FILESDIR=${FILESDIR} ./build.sh
 
 do-install:
-	${CP} -f ${FILESDIR}/install-icons.sh ${WRKSRC} #XXX
-	cd ${WRKSRC} && \
-		env ICONSDIR=${STAGEDIR}${PREFIX}/share/icons ./install-icons.sh
 	${MKDIR} ${STAGEDIR}${DATADIR}/resources
 	${INSTALL_DATA} ${WRKSRC}/electron-app/app.asar ${STAGEDIR}${DATADIR}/resources
 	cd ${WRKSRC}/electron-app && \
 		${COPYTREE_SHARE} app.asar.unpacked ${STAGEDIR}${DATADIR}/resources
-
 	${INSTALL_DATA} ${FILESDIR}/${PORTNAME}.desktop ${STAGEDIR}${DESKTOPDIR}
 	${INSTALL_SCRIPT} ${WRKDIR}/${PORTNAME} ${STAGEDIR}${PREFIX}/bin
+	cd ${WRKSRC} && \
+		env ICONSDIR=${STAGEDIR}${PREFIX}/share/icons ./install-icons.sh
 
 .include <bsd.port.options.mk>
 
